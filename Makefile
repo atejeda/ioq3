@@ -277,6 +277,9 @@ NSISDIR=misc/nsis
 SDLHDIR=$(MOUNT_DIR)/SDL2
 LIBSDIR=$(MOUNT_DIR)/libs
 
+SWIG=swig
+PYTHON_CFLAGS = $(shell python3-config --cflags --ldflags)
+
 bin_path=$(shell which $(1) 2> /dev/null)
 
 # The autoupdater uses curl, so figure out its flags no matter what.
@@ -973,6 +976,8 @@ ifneq ($(BUILD_CLIENT),0)
   endif
 endif
 
+TARGETS += $(B)/_ioq3py_$(SHLIBNAME)
+
 ifneq ($(BUILD_GAME_SO),0)
   ifneq ($(BUILD_BASEGAME),0)
     TARGETS += \
@@ -1259,6 +1264,10 @@ $(echo_cmd) "WINDRES $<"
 $(Q)$(WINDRES) -i $< -o $@
 endef
 
+define DO_SWIG
+$(echo_cmd) "SWIG $<"
+$(Q)$(SWIG) -python $<
+endef
 
 #############################################################################
 # MAIN TARGETS
@@ -2190,6 +2199,31 @@ endif
 
 
 #############################################################################
+# SWIG
+#############################################################################
+
+Q3SWIGC = \
+  $(SYSDIR)/sys_main_wrap.c
+
+Q3SWIGOBJ = \
+  $(B)/client/sys_main_wrap.o
+
+$(SYSDIR)/%_wrap.c: $(SYSDIR)/%.i
+	$(DO_SWIG)
+
+$(B)/client/%_wrap.o: $(SYSDIR)/%_wrap.c
+	$(DO_CC)
+
+$(B)/_ioq3py_$(SHLIBNAME): $(Q3OBJ) $(Q3SWIGOBJ) 
+	$(echo_cmd) "LD $@"
+	@echo $(CLIENT_CFLAGS)
+	$(Q)$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) $(NOTSHLIBLDFLAGS) \
+		-o $@ $(Q3OBJ) $(Q3SWIGOBJ) \
+		$(LIBSDLMAIN) $(CLIENT_LIBS) $(LIBS) $(PYTHON_CFLAGS)
+
+.PHONY: $(BD)/_ioq3py_$(SHLIBNAME)
+
+#############################################################################
 # DEDICATED SERVER
 #############################################################################
 
@@ -2667,6 +2701,9 @@ $(B)/client/%.o: $(SYSDIR)/%.m
 
 $(B)/client/%.o: $(SYSDIR)/%.rc
 	$(DO_WINDRES)
+
+$(B)/client/%_wrap.o: $(SYSDIR)/%.i
+	$(DO_SWIG)
 
 
 $(B)/renderergl1/%.o: $(CMDIR)/%.c

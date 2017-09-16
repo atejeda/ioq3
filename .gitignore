@@ -39,3 +39,8 @@ profile
 *.sdf
 *.opensdf
 *.suo
+
+# Python Swig
+####################
+code/**/*.py
+*_wrap.c
