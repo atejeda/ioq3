@@ -278,7 +278,7 @@ SDLHDIR=$(MOUNT_DIR)/SDL2
 LIBSDIR=$(MOUNT_DIR)/libs
 
 SWIG=swig
-PYTHON_CFLAGS = $(shell python3-config --cflags --ldflags)
+PYTHON_CFLAGS = $(shell python3.6m-config --cflags --ldflags)
 
 bin_path=$(shell which $(1) 2> /dev/null)
 
@@ -1176,7 +1176,7 @@ endif
 
 define DO_CC
 $(echo_cmd) "CC $<"
-$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) $(CLIENT_CFLAGS) $(OPTIMIZE) -o $@ -c $<
+$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) $(CLIENT_CFLAGS) $(PYTHON_CFLAGS) $(OPTIMIZE) -o $@ -c $<
 endef
 
 define DO_REF_CC
