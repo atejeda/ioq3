@@ -278,7 +278,7 @@ SDLHDIR=$(MOUNT_DIR)/SDL2
 LIBSDIR=$(MOUNT_DIR)/libs
 
 SWIG=swig
-PYTHON_CFLAGS = $(shell python3.6m-config --cflags --ldflags)
+PYTHON_CFLAGS = $(shell python3-config --cflags --ldflags) -fno-lto
 
 bin_path=$(shell which $(1) 2> /dev/null)
 
@@ -2705,7 +2705,6 @@ $(B)/client/%.o: $(SYSDIR)/%.rc
 $(B)/client/%_wrap.o: $(SYSDIR)/%.i
 	$(DO_SWIG)
 
-
 $(B)/renderergl1/%.o: $(CMDIR)/%.c
 	$(DO_REF_CC)
 
@@ -2732,7 +2731,6 @@ $(B)/renderergl2/%.o: $(RCOMMONDIR)/%.c
 
 $(B)/renderergl2/%.o: $(RGL2DIR)/%.c
 	$(DO_REF_CC)
-
 
 $(B)/ded/%.o: $(ASMDIR)/%.s
 	$(DO_AS)
