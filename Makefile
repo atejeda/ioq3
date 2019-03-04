@@ -278,7 +278,7 @@ SDLHDIR=$(MOUNT_DIR)/SDL2
 LIBSDIR=$(MOUNT_DIR)/libs
 
 SWIG=swig
-PYTHON_CFLAGS = $(shell python3-config --cflags --ldflags) -fno-lto
+PYTHON_CFLAGS =$(shell python-config --cflags --ldflags) -fPIC -fno-lto
 
 bin_path=$(shell which $(1) 2> /dev/null)
 
@@ -2217,9 +2217,12 @@ $(B)/client/%_wrap.o: $(SYSDIR)/%_wrap.c
 $(B)/_ioq3py_$(SHLIBNAME): $(Q3OBJ) $(Q3SWIGOBJ) 
 	$(echo_cmd) "LD $@"
 	@echo $(CLIENT_CFLAGS)
-	$(Q)$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) $(NOTSHLIBLDFLAGS) \
+	#$(Q)
+	$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) \
+		$(NOTSHLIBLDFLAGS) \
 		-o $@ $(Q3OBJ) $(Q3SWIGOBJ) \
-		$(LIBSDLMAIN) $(CLIENT_LIBS) $(LIBS) $(PYTHON_CFLAGS)
+		$(LIBSDLMAIN) $(CLIENT_LIBS) $(LIBS) \
+		$(PYTHON_CFLAGS)
 
 .PHONY: $(BD)/_ioq3py_$(SHLIBNAME)
 
