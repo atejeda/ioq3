@@ -2216,9 +2216,7 @@ $(B)/client/%_wrap.o: $(SYSDIR)/%_wrap.c
 
 $(B)/_ioq3py_$(SHLIBNAME): $(Q3OBJ) $(Q3SWIGOBJ) 
 	$(echo_cmd) "LD $@"
-	@echo $(CLIENT_CFLAGS)
-	#$(Q)
-	$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) \
+	$(Q)$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) \
 		$(NOTSHLIBLDFLAGS) \
 		-o $@ $(Q3OBJ) $(Q3SWIGOBJ) \
 		$(LIBSDLMAIN) $(CLIENT_LIBS) $(LIBS) \

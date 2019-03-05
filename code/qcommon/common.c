@@ -1961,6 +1961,36 @@ void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int p
 {
 	sysEvent_t  *ev;
 
+        char *ev_type;
+        switch (type) {
+        case SE_NONE:
+            ev_type = "SE_NONE\0";
+            break;
+        case SE_KEY:
+            ev_type = "SE_KEY\0";
+            break;
+        case SE_CHAR:
+            ev_type = "SE_CHAR\0";
+            break;
+        case SE_MOUSE:
+            ev_type = "SE_MOUSE\0";
+            break;
+        case SE_JOYSTICK_AXIS:
+            ev_type = "SE_JOYSTICK_AXIS\0";
+            break;
+        case SE_CONSOLE:
+            ev_type = "SE_CONSOLE\0";
+            break;
+        default:
+            ev_type = "SE_NONE (NOT DEFINED)\0";
+        }
+
+        extern Py_PushEventCallback(int, int, int, int);
+        Py_PushEventCallback(time, type, value, value2);
+        
+        // Com_Printf("*** Com_QueueEvent : type = (%d,%s), value = (%d,%d)\n",
+        //           type, ev_type, value, value2);
+
 	// combine mouse movement with previous mouse event
 	if ( type == SE_MOUSE && eventHead != eventTail )
 	{

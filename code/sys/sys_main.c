@@ -773,10 +773,6 @@ int pymain( int argc, char **argv )
 	int   i;
 	char  commandLine[ MAX_STRING_CHARS ] = { 0 };
 
-	// printf("ok ok ok, alright, alright, alright...\n");
-	
-	// return 0;	
-
 	extern void Sys_LaunchAutoupdater(int argc, char **argv);
 	Sys_LaunchAutoupdater(argc, argv);
 
@@ -854,4 +850,15 @@ int pymain( int argc, char **argv )
 	}
 
 	return 0;
+}
+
+void (*Py_Callback)(int, int, int, int);
+
+void Py_SetEventCallback(void (*f)(int a, int b, int c, int d)) {
+    Py_Callback = f;
+}
+
+void Py_PushEventCallback(int a, int b, int c, int d) {
+    if (Py_Callback == NULL) return;
+    Py_Callback(a,b,c,d);
 }
