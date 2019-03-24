@@ -43,4 +43,5 @@ profile
 # Python Swig
 ####################
 code/**/*.py
-*_wrap.c
+*_wrap.cvenv
+venv

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# rtags
+export PATH=~/rtags/bin:$PATH
+rdm & >> /dev/null 2>&1
+
