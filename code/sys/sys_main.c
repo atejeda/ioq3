@@ -289,7 +289,7 @@ static __attribute__ ((noreturn)) void Sys_Exit( int exitCode )
 	NET_Shutdown( );
 
 	Sys_PlatformExit( );
-
+        
 	exit( exitCode );
 }
 
@@ -852,13 +852,13 @@ int pymain( int argc, char **argv )
 	return 0;
 }
 
-void (*Py_Callback)(int, int, int, int);
+void (*Py_Callback)(char *);
 
-void Py_SetEventCallback(void (*f)(int a, int b, int c, int d)) {
+void Py_SetEventCallback(void (*f)(char *)) {
     Py_Callback = f;
 }
 
-void Py_PushEventCallback(int a, int b, int c, int d) {
+void Py_PushEventCallback(char *jevent) {
     if (Py_Callback == NULL) return;
-    Py_Callback(a,b,c,d);
+    Py_Callback(jevent);
 }

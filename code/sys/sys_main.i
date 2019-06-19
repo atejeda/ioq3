@@ -52,19 +52,21 @@ int print_args(char **argv) {
 %module sys_main
 
 // event callback setup
-%typemap(in) void (*f)(int, int, int, int) {
+%typemap(in) void (*f1)(int, int, int, int) {
     $1 = (void (*)(int, int, int, int))PyInt_AsLong($input);;
+}
+
+%typemap(in) void (*f2)(char *) {
+    $1 = (void (*)(char *))PyInt_AsLong($input);;
 }
 
 %{
 extern int pymain( int argc, char **argv );
-extern void Py_SetEventCallback(void (*f)(int a, int b, int c, int d));
-extern void Py_PushEventCallback(int a, int b, int c, int d);
+extern void Py_SetEventCallback(void (*f2)(char *));
 %}
 
 extern int pymain( int argc, char **argv );
-extern void Py_SetEventCallback(void (*f)(int a, int b, int c, int d));
-extern void Py_PushEventCallback(int a, int b, int c, int d);
+extern void Py_SetEventCallback(void (*f2)(char *));
 
 
 %pythoncode
@@ -73,16 +75,18 @@ extern void Py_PushEventCallback(int a, int b, int c, int d);
 import ctypes
 
 # a ctypes callback prototype
-py_callback_type = ctypes.CFUNCTYPE(None, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int)
+py_callback_type = ctypes.CFUNCTYPE(None, ctypes.c_char_p)
 
 def Py_SetEventCallback(py_callback):
 
     # wrap the python callback with a ctypes function pointer
     f = py_callback_type(py_callback)
 
-    # get the function pointer of the ctypes wrapper by casting it to void* and taking its value
+    # get func pointer of the ctypes wrapper by casting it to void*
+    # and read the value
     f_ptr = ctypes.cast(f, ctypes.c_void_p).value
 
     _sys_main.Py_SetEventCallback(f_ptr)
 
+set_event_callback = Py_SetEventCallback
 %}

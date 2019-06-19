@@ -2980,7 +2980,7 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_char swig_types[0]
-#define SWIGTYPE_p_f_int_int_int_int__void swig_types[1]
+#define SWIGTYPE_p_f_p_char__void swig_types[1]
 #define SWIGTYPE_p_p_char swig_types[2]
 static swig_type_info *swig_types[4];
 static swig_module_info swig_module = {swig_types, 3, 0, 0, 0, 0};
@@ -3033,8 +3033,7 @@ SWIGINTERNINLINE PyObject*
 
 
 extern int pymain( int argc, char **argv );
-extern void Py_SetEventCallback(void (*f)(int a, int b, int c, int d));
-extern void Py_PushEventCallback(int a, int b, int c, int d);
+extern void Py_SetEventCallback(void (*f2)(char *));
 
 
 #include <limits.h>
@@ -3287,62 +3286,14 @@ fail:
 
 SWIGINTERN PyObject *_wrap_Py_SetEventCallback(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  void (*arg1)(int,int,int,int) = (void (*)(int,int,int,int)) 0 ;
+  void (*arg1)(char *) = (void (*)(char *)) 0 ;
   PyObject * obj0 = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:Py_SetEventCallback",&obj0)) SWIG_fail;
   {
-    arg1 = (void (*)(int, int, int, int))PyInt_AsLong(obj0);;
+    arg1 = (void (*)(char *))PyInt_AsLong(obj0);;
   }
   Py_SetEventCallback(arg1);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Py_PushEventCallback(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  int arg1 ;
-  int arg2 ;
-  int arg3 ;
-  int arg4 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Py_PushEventCallback",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  ecode1 = SWIG_AsVal_int(obj0, &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "Py_PushEventCallback" "', argument " "1"" of type '" "int""'");
-  } 
-  arg1 = (int)(val1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Py_PushEventCallback" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = (int)(val2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Py_PushEventCallback" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = (int)(val3);
-  ecode4 = SWIG_AsVal_int(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Py_PushEventCallback" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = (int)(val4);
-  Py_PushEventCallback(arg1,arg2,arg3,arg4);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -3355,7 +3306,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"print_args", _wrap_print_args, METH_VARARGS, NULL},
 	 { (char *)"pymain", _wrap_pymain, METH_VARARGS, NULL},
 	 { (char *)"Py_SetEventCallback", _wrap_Py_SetEventCallback, METH_VARARGS, NULL},
-	 { (char *)"Py_PushEventCallback", _wrap_Py_PushEventCallback, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -3363,22 +3313,22 @@ static PyMethodDef SwigMethods[] = {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_int_int_int_int__void = {"_p_f_int_int_int_int__void", "void (*)(int,int,int,int)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_char__void = {"_p_f_p_char__void", "void (*)(char *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
-  &_swigt__p_f_int_int_int_int__void,
+  &_swigt__p_f_p_char__void,
   &_swigt__p_p_char,
 };
 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_f_int_int_int_int__void[] = {  {&_swigt__p_f_int_int_int_int__void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_char__void[] = {  {&_swigt__p_f_p_char__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
-  _swigc__p_f_int_int_int_int__void,
+  _swigc__p_f_p_char__void,
   _swigc__p_p_char,
 };
 
