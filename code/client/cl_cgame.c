@@ -503,6 +503,7 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		S_StartSound( VMA(1), args[2], args[3], args[4] );
 		return 0;
 	case CG_S_STARTLOCALSOUND:
+		printf("CG_S_STARTLOCALSOUND = %d\n", args[0]);
 		S_StartLocalSound( args[1], args[2] );
 		return 0;
 	case CG_S_CLEARLOOPINGSOUNDS:
