@@ -852,6 +852,25 @@ int pymain( int argc, char **argv )
 	return 0;
 }
 
+void Py_BuildEvent(char** holder, void **data, int elements) {
+    for (int i = 0; i < elements * 3; i+=3) {
+        char* mask = NULL;
+        asprintf(&mask, "\"%%s\":%s", data[i+2]);
+
+        char* pair = NULL;
+        asprintf(&pair, mask, data[i], data[i+1]);
+
+        if (i == 0) {
+            asprintf(holder, "%s", pair);
+        } else {
+            asprintf(holder, "%s,%s", *holder, pair);
+        }
+       
+    }
+    
+    asprintf(holder, "{%s}", *holder);
+}
+
 void (*Py_Callback)(char *);
 
 void Py_SetEventCallback(void (*f)(char *)) {

@@ -1984,14 +1984,28 @@ void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int p
         default:
             ev_type = "SE_UNDEFINED";
         }
-
-        char *jevent;
-        asprintf(&jevent, "{\"type\":\"%s\",\"time\":%d,\"value1\":%d,\"value2\":%d}", ev_type, time, value, value2);
-        // Com_Printf("Com_QueueEvent : %s\n", line);
-        extern Py_PushEventCallback(char *);
-        Py_PushEventCallback(jevent);
-        free(jevent);
         
+        extern Py_BuildEvent(char *, void **, int);
+        extern Py_PushEventCallback(char *);
+        
+        const int length = 4;
+        
+        void *data[length*3] = {
+            "type",   ev_type, "\"%s\"",
+            "time",   time,    "%i",
+            "value1", value,   "%i",
+            "value2", value2,  "%i"
+        };
+        
+        char *jevent = NULL;
+
+        Py_BuildEvent(&jevent, data, length);
+        Py_PushEventCallback(jevent);
+
+        Com_Printf("Com_QueueEvent : %s\n", jevent);
+        
+        free(jevent);
+
 	// combine mouse movement with previous mouse event
 	if ( type == SE_MOUSE && eventHead != eventTail )
 	{
