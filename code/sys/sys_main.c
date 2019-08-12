@@ -881,3 +881,10 @@ void Py_PushEventCallback(char *jevent) {
     if (Py_Callback == NULL) return;
     Py_Callback(jevent);
 }
+
+void Py_Event(void **data, int elements) {
+	char *pyevent = NULL;
+	Py_BuildEvent(&pyevent, data, elements);
+	Py_PushEventCallback(pyevent);
+	free(pyevent);
+}

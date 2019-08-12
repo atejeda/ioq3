@@ -408,6 +408,8 @@ The cgame module is making a system call
 ====================
 */
 intptr_t CL_CgameSystemCalls( intptr_t *args ) {
+	extern Py_Event(void **, int);
+
 	switch( args[0] ) {
 	case CG_PRINT:
 		Com_Printf( "%s", (const char*)VMA(1) );
@@ -693,6 +695,10 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		return re.GetEntityToken( VMA(1), args[2] );
 	case CG_R_INPVS:
 		return re.inPVS( VMA(1), VMA(2) );
+
+	case CG_PY_MESSAGE:
+		Py_Event(args[1], args[2]);
+		return 0;
 
 	default:
 	        assert(0);

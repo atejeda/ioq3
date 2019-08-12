@@ -1684,4 +1684,4 @@ void	CG_ParticleExplosion (char *animStr, vec3_t origin, vec3_t vel, int duratio
 extern qboolean		initparticles;
 int CG_NewParticleArea ( int num );
 
-
+void	trap_Py_Message(void **data, int elements);

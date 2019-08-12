@@ -164,6 +164,7 @@ typedef enum {
 	CG_R_INPVS,
 	// 1.32
 	CG_FS_SEEK,
+	CG_PY_MESSAGE,
 
 /*
 	CG_LOADCAMERA,
@@ -182,7 +183,8 @@ typedef enum {
 	CG_CEIL,
 	CG_TESTPRINTINT,
 	CG_TESTPRINTFLOAT,
-	CG_ACOS
+	CG_ACOS,
+	CG_ASPRINTF
 } cgameImport_t;
 
 
