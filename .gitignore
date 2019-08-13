@@ -45,3 +45,4 @@ profile
 code/**/*.py
 *_wrap.cvenv
 venv
+code/sys/sys_main_wrap.c

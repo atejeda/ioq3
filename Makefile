@@ -277,9 +277,6 @@ NSISDIR=misc/nsis
 SDLHDIR=$(MOUNT_DIR)/SDL2
 LIBSDIR=$(MOUNT_DIR)/libs
 
-SWIG=swig
-PYTHON_CFLAGS =$(shell python-config --cflags --ldflags) -fPIC -fno-lto
-
 bin_path=$(shell which $(1) 2> /dev/null)
 
 # The autoupdater uses curl, so figure out its flags no matter what.
@@ -1177,7 +1174,7 @@ endif
 
 define DO_CC
 $(echo_cmd) "CC $<"
-$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) $(CLIENT_CFLAGS) $(PYTHON_CFLAGS) $(OPTIMIZE) -pg -o $@ -c $<
+$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) $(CLIENT_CFLAGS) $(OPTIMIZE) -pg -o $@ -c $<
 endef
 
 define DO_REF_CC
@@ -2203,6 +2200,9 @@ endif
 # SWIG
 #############################################################################
 
+SWIG=swig
+PYTHON_CFLAGS =$(shell python-config --cflags --ldflags) -fPIC -fno-lto
+
 Q3SWIGC = \
   $(SYSDIR)/sys_main_wrap.c
 
@@ -2215,6 +2215,7 @@ $(SYSDIR)/%_wrap.c: $(SYSDIR)/%.i
 $(B)/client/%_wrap.o: $(SYSDIR)/%_wrap.c
 	$(DO_CC)
 
+# build/debug-darwin-x86_64/_ioq3py_x86_64.dylib
 $(B)/_ioq3py_$(SHLIBNAME): $(Q3OBJ) $(Q3SWIGOBJ) 
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) \
