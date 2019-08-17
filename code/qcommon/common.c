@@ -1987,7 +1987,7 @@ void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int p
        
         const int length = 4;
         
-        void *data[length*3] = {
+        void *data[12] = {
             "type",   ev_type, "\"%s\"",
             "time",   time,    "%i",
             "value1", value,   "%i",
