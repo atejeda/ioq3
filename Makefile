@@ -1174,7 +1174,7 @@ endif
 
 define DO_CC
 $(echo_cmd) "CC $<"
-$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) $(CLIENT_CFLAGS) $(OPTIMIZE) -pg -o $@ -c $<
+$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) $(CLIENT_CFLAGS) $(PYTHON_CFLAGS) $(OPTIMIZE) -pg -o $@ -c $<
 endef
 
 define DO_REF_CC
